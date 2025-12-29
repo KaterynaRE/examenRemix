@@ -3,81 +3,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_owner",
+          "name": "_calculator",
           "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_maxBalance",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bool",
-          "name": "_active",
-          "type": "bool"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_minDeposit",
-          "type": "uint256"
         }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
-    },
-    {
-      "inputs": [],
-      "name": "ContractInactive",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "NotOwner",
-      "type": "error"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amountWei",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amountMicroether",
-          "type": "uint256"
-        }
-      ],
-      "name": "DepositReceived",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "Withdraw",
-      "type": "event"
     },
     {
       "inputs": [
@@ -113,91 +44,14 @@
     },
     {
       "inputs": [],
-      "name": "contractActive",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "deposit",
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        }
-      ],
-      "name": "getUserBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
-      "name": "maxBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "minDeposit",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_calculator",
-          "type": "address"
-        }
-      ],
-      "name": "setCalculator",
+      "name": "payInterest",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

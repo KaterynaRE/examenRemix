@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-348c86b0c0f30763198f21bfa475e4f519d134e9",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/InterestCalculator.sol": "project/contracts/InterestCalculator.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/InterestCalculator.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ncontract InterestCalculator {\r\n    address public bank;\r\n    uint256 public interestRate; \r\n\r\n    mapping(address => uint256) public interestAccrued;\r\n\r\n    modifier onlyBank() {\r\n        require(msg.sender == bank, \"Only bank\");\r\n        _;\r\n    }\r\n\r\n    constructor(uint256 _rate) {\r\n        interestRate = _rate;\r\n    }\r\n\r\n    function setBank(address _bank) external {\r\n        bank = _bank;\r\n    }\r\n\r\n    function accrueInterest(address user, uint256 balance) external onlyBank {\r\n        uint256 interest = (balance * interestRate) / 100;\r\n        interestAccrued[user] += interest;\r\n    }\r\n\r\n    function payInterest(address user) external onlyBank {\r\n        uint256 amount = interestAccrued[user];\r\n        require(amount > 0, \"No interest\");\r\n        interestAccrued[user] = 0;\r\n        payable(user).transfer(amount);\r\n    }\r\n\r\n    receive() external payable {}\r\n}\r\n\r\n\r\n"
+      }
+    }
+  }
+}

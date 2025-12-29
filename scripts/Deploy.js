@@ -1,29 +1,38 @@
-import hardhat from "hardhat";
+// import hardhat from "hardhat";
 
-async function main() {
-  const [deployer] = await hardhat.ethers.getSigners();
+// async function main() {
+//   const [deployer] = await hardhat.ethers.getSigners();
 
-  console.log("Deploying with:", deployer.address);
+//   console.log("Deploying with:", deployer.address);
 
-  const DepositBank = await hardhat.ethers.getContractFactory("DepositBank");
-  const bank = await DepositBank.deploy(
-    deployer.address,
-    hardhat.ethers.parseEther("100"),
-    true,
-    hardhat.ethers.parseEther("0.01")
-  );
-  await bank.waitForDeployment();
+//   const DepositBank = await hardhat.ethers.getContractFactory("DepositBank");
+//   const bank = await DepositBank.deploy(
+//     deployer.address,
+//     hardhat.ethers.parseEther("100"),
+//     true,
+//     hardhat.ethers.parseEther("0.01")
+//   );
+//   await bank.waitForDeployment();
 
-  console.log("DepositBank deployed at:", await bank.getAddress());
+//   console.log("DepositBank deployed at:", await bank.getAddress());
 
-  const InterestCalculator = await hardhat.ethers.getContractFactory("InterestCalculator");
-  const calculator = await InterestCalculator.deploy(5);
-  await calculator.waitForDeployment();
+//   const InterestCalculator = await hardhat.ethers.getContractFactory("InterestCalculator");
+//   const calculator = await InterestCalculator.deploy(5);
+//   await calculator.waitForDeployment();
 
-  console.log("InterestCalculator deployed at:", await calculator.getAddress());
+//   console.log("InterestCalculator deployed at:", await calculator.getAddress());
 
-  await (await bank.setCalculator(await calculator.getAddress())).wait();
-  console.log("Contracts linked");
-}
+//   await (await bank.setCalculator(await calculator.getAddress())).wait();
+//   console.log("Contracts linked");
+// }
 
-main().catch(console.error);
+// main().catch(console.error);
+
+import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+
+export default buildModule("BankModule", (m) => {
+  const calculator = m.contract("InterestCalculator", [5]);
+  const bank = m.contract("DepositBank", [calculator]);
+
+  return { bank, calculator };
+});

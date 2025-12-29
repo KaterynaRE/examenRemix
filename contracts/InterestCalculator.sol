@@ -2,43 +2,37 @@
 pragma solidity ^0.8.20;
 
 contract InterestCalculator {
-    address public owner;
-
-    mapping(address => uint256) public balances;
-    mapping(address => uint256) public interestAccrued;
-
+    address public bank;
     uint256 public interestRate; 
 
-    event InterestPaid(address indexed user, uint256 amount);
+    mapping(address => uint256) public interestAccrued;
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
+    modifier onlyBank() {
+        require(msg.sender == bank, "Only bank");
         _;
     }
 
-    constructor(uint256 _interestRate) {
-        owner = msg.sender;
-        interestRate = _interestRate;
+    constructor(uint256 _rate) {
+        interestRate = _rate;
     }
 
-    function setBalance(address user, uint256 amount) external {
-        balances[user] = amount;
+    function setBank(address _bank) external {
+        bank = _bank;
     }
 
-    function accrueInterest(address user) external {
-        uint256 interest = (balances[user] * interestRate) / 100;
+    function accrueInterest(address user, uint256 balance) external onlyBank {
+        uint256 interest = (balance * interestRate) / 100;
         interestAccrued[user] += interest;
     }
 
-    function payInterest(address user) external {
+    function payInterest(address user) external onlyBank {
         uint256 amount = interestAccrued[user];
         require(amount > 0, "No interest");
-
         interestAccrued[user] = 0;
         payable(user).transfer(amount);
-
-        emit InterestPaid(user, amount);
     }
 
     receive() external payable {}
 }
+
+
